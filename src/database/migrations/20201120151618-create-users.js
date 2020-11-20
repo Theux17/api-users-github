@@ -13,6 +13,10 @@ module.exports = {
         type: Sequelize.TEXT, 
         allowNull: false
       },
+      email:{ 
+        type: Sequelize.TEXT, 
+        allowNull: false
+      },
       location: {
         type: Sequelize.TEXT
       },
