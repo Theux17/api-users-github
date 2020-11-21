@@ -11,8 +11,9 @@ const routes = Router()
 routes.post('/users/login', TokenController.login)
 routes.delete('/users/logout/:userId', usersLoggedIn, TokenController.logout)
 
-routes.get('/users', UserController.index)
+// users
 routes.post('/users', UserValidator.create, UserController.create)
+routes.get('/users/:userId', usersLoggedIn, UserController.show)
 routes.put('/users/:userId', usersLoggedIn, UserValidator.update, UserController.update)
 routes.delete('/users/:userId', usersLoggedIn, UserValidator.deleteUser, UserController.delete)
 

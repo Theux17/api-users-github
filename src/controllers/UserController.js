@@ -1,18 +1,6 @@
 const User = require('../models/User')
 
 module.exports = {
-    async index(req, res) {
-        try {
-            const users = await User.findAll()
-
-            return res.json(users)
-        } catch (error) {
-            return res.status(500).json({
-                error: "Erro ao listar todos os usuários."
-            })
-        }
-    },
-
     async create(req, res) {
         try {
             const {
@@ -37,6 +25,19 @@ module.exports = {
         } catch (error) {
             return res.status(500).json({
                 error: "Erro ao cadastrar usuário."
+            })
+        }
+    },
+
+    async show(req, res) {
+        try {
+            const { userId } = req.params
+            const user = await User.findByPk(userId)
+
+            return res.json(user)
+        } catch (error) {
+            return res.status(500).json({
+                error: "Erro ao listar os dados do usuário."
             })
         }
     },
