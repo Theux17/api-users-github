@@ -3,12 +3,14 @@ const UserController = require('./controllers/UserController')
 const TokenController = require('./controllers/TokenController')
 
 const UserValidator = require('./validators/user')
+const TokenValidator = require('./validators/token')
+
 const { usersLoggedIn } = require('./middlewares/session')
 
 const routes = Router()
 
 // login/logout
-routes.post('/users/login', TokenController.login)
+routes.post('/users/login', TokenValidator.login, TokenController.login)
 routes.delete('/users/logout/:userId', usersLoggedIn, TokenController.logout)
 
 // users

@@ -1,19 +1,12 @@
 const Token = require('../models/Token')
-const User = require('../models/User')
 
 module.exports = {
     async login(req, res) {
         try {
-            const { username } = req.body
-
-            const user = await User.findOne({  where: { username } })
-
-            if(!user) return res.status(404).json({
-                error: "Usuário não cadastrado!"
-            })
-
             const date = new Date
             const date_now = `${date.getUTCFullYear()}-${date.getUTCMonth() + 1}-${date.getUTCDate() - 1}`
+
+            const user = req.user
 
             await Token.create({
                 user_id: user.id,
