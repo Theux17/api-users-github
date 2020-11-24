@@ -3,11 +3,13 @@ const UserController = require('./controllers/UserController')
 const TokenController = require('./controllers/TokenController')
 const FollowingController = require('./controllers/FollowingController')
 const FollowerController = require('./controllers/FollowerController')
+const RepositoryController = require('./controllers/RepositoryController')
 
 const UserValidator = require('./validators/user')
 const TokenValidator = require('./validators/token')
 const FollowingValidator = require('./validators/following')
 const FollowerValidator = require('./validators/follower')
+const RepositoryValidator = require('./validators/repository')
 
 const { usersLoggedIn } = require('./middlewares/session')
 
@@ -29,8 +31,15 @@ routes.post('/users/:userId/following', usersLoggedIn, FollowingValidator.create
 routes.get('/users/:userId/following/:followingId', usersLoggedIn, FollowingValidator.show, FollowingController.show)
 routes.delete('/users/:userId/following', usersLoggedIn, FollowingValidator.deleteFollowing, FollowingController.delete)
 
-// Followers 
+// followers 
 routes.get('/users/:userId/followers', usersLoggedIn, FollowerController.index)
 routes.get('/users/:userId/followers/:followerId', usersLoggedIn, FollowerValidator.show, FollowerController.show)
+
+// repositories
+routes.get('/users/:userId/repositories', usersLoggedIn, RepositoryController.index)
+routes.post('/users/:userId/repositories', usersLoggedIn, RepositoryValidator.create, RepositoryController.create)
+routes.get('/users/:userId/repositories/:repositoryId', usersLoggedIn, RepositoryValidator.show, RepositoryController.show)
+routes.put('/users/:userId/repositories/:repositoryId', usersLoggedIn, RepositoryValidator.update, RepositoryController.update)
+routes.delete('/users/:userId/repositories/:repositoryId', usersLoggedIn, RepositoryValidator.deleteRepository, RepositoryController.delete)
 
 module.exports = routes

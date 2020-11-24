@@ -17,6 +17,7 @@ class User extends Model {
     static associate(models) {
         this.hasMany(models.Following, { foreignKey: 'user_id', as: 'following' })
         this.hasMany(models.Followers, { foreignKey: 'user_id', as: 'followers' })    
+        this.hasMany(models.Repository, { foreignKey: 'user_id', as: 'repositories' })    
     }
 }
 
