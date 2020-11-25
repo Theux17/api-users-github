@@ -10,18 +10,20 @@ function checksIfFieldsIsEmpty(body, res) {
     }
 }
 
-async function checkIfRepositoryisEmpty(userId, repositoryId, res ){
+async function checkIfRepositoryisEmpty(userId, repositoryId ){
     const user = await User.findByPk(userId, {
         include: 'repositories'
     })
 
     const repository = user.repositories.find(repository => repository.id == repositoryId)
 
+    return repository
+}
+
+function repositoryNotFoundErrorMessage(repository, repositoryId, res){
     if (!repository) return res.status(404).json({
         error: `Você não possui repositório com o id ${repositoryId}.`
     })
-
-    return repository
 }
 
 
@@ -49,8 +51,8 @@ async function show(req, res, next) {
     const { userId, repositoryId } = req.params
 
     const repository = await checkIfRepositoryisEmpty(userId, repositoryId, res)
-    
-    req.repository = repository
+    if(!repository) return repositoryNotFoundErrorMessage(repository, repositoryId, res)
+
 
     next()
 }
@@ -59,6 +61,7 @@ async function update(req, res, next) {
     const { userId, repositoryId } = req.params
 
     const repository = await checkIfRepositoryisEmpty(userId, repositoryId, res)
+    if(!repository) return repositoryNotFoundErrorMessage(repository, repositoryId, res)
 
     req.repository = repository
 
@@ -69,6 +72,7 @@ async function deleteRepository(req, res, next) {
     const { userId, repositoryId } = req.params
 
     const repository = await checkIfRepositoryisEmpty(userId, repositoryId, res)
+    if(!repository) return repositoryNotFoundErrorMessage(repository, repositoryId, res)
 
     req.repository = repository
 
