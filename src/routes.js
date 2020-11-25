@@ -4,12 +4,14 @@ const TokenController = require('./controllers/TokenController')
 const FollowingController = require('./controllers/FollowingController')
 const FollowerController = require('./controllers/FollowerController')
 const RepositoryController = require('./controllers/RepositoryController')
+const RepositoryStarController = require('./controllers/RepositoryStarController')
 
 const UserValidator = require('./validators/user')
 const TokenValidator = require('./validators/token')
 const FollowingValidator = require('./validators/following')
 const FollowerValidator = require('./validators/follower')
 const RepositoryValidator = require('./validators/repository')
+const RepositoryStarValidator = require('./validators/repositoryStar')
 
 const { usersLoggedIn } = require('./middlewares/session')
 
@@ -41,5 +43,10 @@ routes.post('/users/:userId/repositories', usersLoggedIn, RepositoryValidator.cr
 routes.get('/users/:userId/repositories/:repositoryId', usersLoggedIn, RepositoryValidator.show, RepositoryController.show)
 routes.put('/users/:userId/repositories/:repositoryId', usersLoggedIn, RepositoryValidator.update, RepositoryController.update)
 routes.delete('/users/:userId/repositories/:repositoryId', usersLoggedIn, RepositoryValidator.deleteRepository, RepositoryController.delete)
+
+// repositories-stars
+routes.post('/users/:userId/repositories-stars', usersLoggedIn, RepositoryStarValidator.create, RepositoryStarController.create)
+routes.delete('/users/:userId/repositories-stars', usersLoggedIn, RepositoryStarValidator.deleteStar, RepositoryStarController.delete)
+
 
 module.exports = routes

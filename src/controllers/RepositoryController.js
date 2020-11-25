@@ -51,7 +51,11 @@ module.exports = {
 
     async show(req, res) {
         try {
-            const repository = req.repository
+            const {repositoryId } = req.params
+        
+            let repository = await Repository.findByPk(repositoryId, {
+                include: { association: 'stars' }
+            })
 
             return res.json(repository)
         } catch (error) {

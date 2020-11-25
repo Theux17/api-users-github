@@ -6,6 +6,7 @@ const Token = require('../models/Token')
 const Following = require('../models/Following')
 const Follower = require('../models/Follower')
 const Repository = require('../models/Repository')
+const RepositoryStar = require('../models/RepositoryStar')
 
 const connection = new Sequelize(dbConfig)
 
@@ -14,10 +15,12 @@ Token.init(connection)
 Follower.init(connection)
 Following.init(connection)
 Repository.init(connection)
+RepositoryStar.init(connection)
 
 User.associate(connection.models)
 Following.associate(connection.models)
 Follower.associate(connection.models)
 Repository.associate(connection.models)
+RepositoryStar.associate(connection.models)
 
 module.exports = connection
